@@ -37,17 +37,17 @@ export const setupServer = () => {
   //   });
   // });
 
-  app.use((err, req, res, next) => {
-    res.status(500).json({
-      message: 'Something went wrong',
-      error: err.message,
-    });
-    next();
-  });
+  // app.use((err, req, res, next) => {
+  //   res.status(500).json({
+  //     message: 'Something went wrong',
+  //     error: err.message,
+  //   });
+  //   next();
+  // });
 
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-  });
+  // app.listen(PORT, () => {
+  //   console.log(`Server is running on port ${PORT}`);
+  // });
 
   app.get('/contacts', async (req, res) => {
     const contacts = await getAllContacts();
@@ -73,6 +73,13 @@ export const setupServer = () => {
   res.status(404).json({
       message: 'Not found',
     });
+        });
+
+        app.use((err, req, res, next) => {
+    res.status(500).json({
+      message: 'Something went wrong',
+      error: err.message,
+    });
   });
 
       res.status(200).json({
@@ -86,6 +93,9 @@ export const setupServer = () => {
         message: 'Internal Server Error',
       });
     }
+  });
+    app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
   });
 };
 
