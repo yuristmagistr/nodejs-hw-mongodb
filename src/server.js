@@ -18,17 +18,18 @@ export const setupServer = () => {
     }),
   );
 
+  app.use((req, res, next) => {
+    console.log(`Time: ${new Date().toLocaleString()}`);
+    next();
+  });
+
   app.get('/', (req, res) => {
     res.json({
       message: 'Hello world!',
     });
   });
 
-  app.use(cors());
-
-  app.use(express.json());
-
-  app.use(router);
+  app.use(contactsRouter);
 
   app.use('*', notFoundHandler);
 
