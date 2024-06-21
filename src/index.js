@@ -5,6 +5,7 @@ const bootstrap = async () => {
   await initMongoConnection();
   setupServer();
 };
+
 bootstrap();
 
 export const SORT_ORDER = {
