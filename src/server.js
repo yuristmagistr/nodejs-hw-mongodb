@@ -18,6 +18,8 @@ export const setupServer = () => {
     }),
   );
 
+  app.use(router);
+
   app.use((req, res, next) => {
     console.log(`Time: ${new Date().toLocaleString()}`);
     next();
@@ -29,7 +31,6 @@ export const setupServer = () => {
     });
   });
 
-  app.use(contactsRouter);
 
   app.use('*', notFoundHandler);
 
