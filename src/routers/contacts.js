@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import {
-  getContctsController,
-  getContctsByIdController,
+  getContactsController,
+  getContactsByIdController,
   createContactController,
   deleteContactsController,
   updateContactController,
@@ -16,9 +16,9 @@ const router = Router();
 
 router.use('/contacts/:contactId', validateMongoId);
 
-router.get('/contacts', ctrlWrapper(getContctsController));
+router.get('/contacts', ctrlWrapper(getContactsController));
 
-router.get('/contacts/:contactId', ctrlWrapper(getContctsByIdController));
+router.get('/contacts/:contactId', ctrlWrapper(getContactsByIdController));
 
 router.post(
   '/contacts',
