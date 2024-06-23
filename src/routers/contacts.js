@@ -1,37 +1,28 @@
 import { Router } from 'express';
 import {
-  getContactsController,
-  getContactsByIdController,
-  createContactController,
-  deleteContactsController,
-  updateContactController,
+    getContactsByIdController,
+    getContactsController,
+    createContactController,
+    deleteContactController,
+    updateContactController,
+    patchContactController
 } from '../controllers/contacts.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import { createContactSchema } from '../validation/createContactSchema.js';
-import { updateContactSchema } from '../validation/updateContactSchema.js';
-import validateMongoId from '../middlewares/valiateMongoId.js';
 import { validateBody } from '../middlewares/validateBody.js';
+import { creaContactSchema, updateContactSchema } from '../validation/contacts.js';
 
 const router = Router();
 
-router.use('/contacts/:contactId', validateMongoId);
-
-router.get('/contacts', ctrlWrapper(getContactsController));
+router.get('/contacts', ctrlWrapper(getContactsController) );
 
 router.get('/contacts/:contactId', ctrlWrapper(getContactsByIdController));
 
-router.post(
-  '/contacts',
-  validateBody(createContactSchema),
-  ctrlWrapper(createContactController),
-);
+router.post('/contacts', ctrlWrapper(createContactController));
 
-router.patch(
-  '/contacts/:contactId',
-  validateBody(updateContactSchema),
-  ctrlWrapper(updateContactController),
-);
+router.delete('/contacts/:contactId', ctrlWrapper(deleteContactController));
 
-router.delete('/contacts/:contactId', ctrlWrapper(deleteContactsController));
+router.put('/contacts/:contactId',validateBody(creaContactSchema), ctrlWrapper(updateContactController));
 
-export default router;
+router.patch('/contacts/:contactId', validateBody(updateContactSchema), ctrlWrapper(patchContactController));
+
+ export default router;

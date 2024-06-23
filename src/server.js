@@ -1,14 +1,24 @@
 import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
-import router from './routers/contacts.js';
+import { env } from './utils/env.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import contactsRouter from './routers/contacts.js';
+
+const PORT = env.PORT || 3000;
 
 export const setupServer = () => {
-  const PORT = 3000;
-
   const app = express();
+
+ app.use(
+  express.json({
+    type: ['application/json', 'application/vnd.api+json'],
+    limit: '100kb',
+  }),
+ );
+
+  app.use(cors());
 
   app.use(
     pino({
@@ -18,19 +28,7 @@ export const setupServer = () => {
     }),
   );
 
-  app.use(router);
-
-  app.use((req, res, next) => {
-    console.log(`Time: ${new Date().toLocaleString()}`);
-    next();
-  });
-
-  app.get('/', (req, res) => {
-    res.json({
-      message: 'Hello world!',
-    });
-  });
-
+  app.use(contactsRouter);
 
   app.use('*', notFoundHandler);
 
