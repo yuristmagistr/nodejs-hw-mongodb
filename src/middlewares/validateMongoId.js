@@ -1,7 +1,7 @@
 import createHttpError from 'http-errors';
 import { isValidObjectId } from 'mongoose';
 
-const validateMongoId = (req, res, next) => {
+export const validateMongoId = (req, res, next) => {
   const { contactId } = req.params;
 
   if (!isValidObjectId(contactId)) {
@@ -10,4 +10,3 @@ const validateMongoId = (req, res, next) => {
   next();
 };
 
-export default validateMongoId;
